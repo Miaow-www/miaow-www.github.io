@@ -626,3 +626,17 @@ body:has(#gallery:not([hidden])){
   #gallery .card-info{left:8px;right:8px;bottom:8px}
   .window-bar{min-height:38px}
 }
+
+.wish-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wish-remove{min-height:30px;padding:3px 8px;border-color:#deccd9;background:#fff8fb;color:#865168}
+.wish-remove:hover{background:#f5e6ef}
+#panel.wish-confirm{--dialog-shift:13px;width:min(400px,calc(100% - 36px));background:#fff8fc;border-color:#d8bdd3}
+#panel.wish-confirm .panel-content{padding:23px 22px 19px}
+#panel.wish-confirm .remove-description{margin:0 0 17px}
+@media(prefers-reduced-motion:no-preference){
+  #panel.wish-confirm[open] #panel-body{animation:wish-confirm-arrive .28s cubic-bezier(.21,.76,.26,1) both}
+}
+@keyframes wish-confirm-arrive{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}

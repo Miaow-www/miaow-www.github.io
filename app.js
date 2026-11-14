@@ -99,6 +99,7 @@ async function prepareImage(file) {
 }
 async function submitForm(form,status,run) {
   const submit = form.querySelector('button[type="submit"], button:not([type])');
+  if (submit.disabled) return;
   submit.disabled=true;
   status.textContent='正在保存…';
   try { await run(new FormData(form)); }
@@ -288,7 +289,14 @@ function wishCard(item) {
   const tile=element('article','','wish-card');
   const time=element('time',new Date(item.created_at).toLocaleDateString('zh-CN'));
   time.dateTime=new Date(item.created_at).toISOString();
-  tile.append(time,element('p',item.message));
+  const header=element('div','','wish-card-head');
+  header.append(time);
+  if (isAdmin() || item.mine) {
+    const remove=button('删除',()=>confirmWishRemoval(item,tile),'small wish-remove');
+    remove.setAttribute('aria-label','删除愿望');
+    header.append(remove);
+  }
+  tile.append(header,element('p',item.message));
   if (item.image) {
     const image=new Image();
     image.alt='愿望参考图';
@@ -301,6 +309,31 @@ function wishCard(item) {
     tile.append(link);
   }
   return tile;
+}
+function confirmWishRemoval(item,tile) {
+  const form=formWith('确定删除',[],async ()=>{
+    await api('wishes/'+item.id,'DELETE');
+    panel.close();
+    if (motionAllowed.matches && tile.isConnected) {
+      await tile.animate(
+        [{opacity:1,transform:'none'},{opacity:0,transform:'translateY(6px) scale(.97)'}],
+        {duration:190,easing:'ease-in',fill:'forwards'}
+      ).finished.catch(()=>{});
+    }
+    if (route()[0]==='wish') {
+      await render();
+      $('wish-status').textContent='愿望已删除。';
+      ($('cards').querySelector('.wish-remove') || wishForm.querySelector('textarea')).focus({preventScroll:true});
+    }
+  });
+  form.querySelector('button').classList.add('remove-action');
+  const actions=element('div','','confirm-actions');
+  const cancel=button('取消',()=>panel.close());
+  actions.append(cancel,form);
+  const explanation=item.image?'这张纸条和参考图会一起删除。':'这张纸条会从愿望列表里移除。';
+  openPanel('确定删除？',element('p',explanation,'remove-description'),actions);
+  panel.classList.add('wish-confirm');
+  cancel.focus();
 }
 const wishForm=$('wish-form');
 const wishImage=wishForm.elements.image;
@@ -395,7 +428,7 @@ detail.addEventListener('cancel',event=>{event.preventDefault();closeDetail();})
 $('panel-close').addEventListener('click',()=>panel.close());
 function openPanel(title,...content) {
   const replacing=panel.open;
-  panel.classList.remove('library-panel','invites-panel');
+  panel.classList.remove('library-panel','invites-panel','wish-confirm');
   $('panel-title').textContent=title;
   $('panel-body').replaceChildren(...content);
   $('panel-status').textContent='';
