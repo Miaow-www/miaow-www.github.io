@@ -3,12 +3,103 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>雾页 · 提示词图鉴</title>
-<script>
-  const gallery = "https://mist-index-gallery.bonny-scarf-6078.chatgpt.site/";
-  location.replace(gallery + location.hash);
-</script>
-<noscript><meta http-equiv="refresh" content="0;url=https://mist-index-gallery.bonny-scarf-6078.chatgpt.site/"></noscript>
+<meta name="theme-color" content="#f7f4ee">
+<title>喵呜呜与威士忌</title>
+<link rel="stylesheet" href="/style.css">
+<script type="module" src="/app.js"></script>
 </head>
-<body><p><a href="https://mist-index-gallery.bonny-scarf-6078.chatgpt.site/">打开新版提示词图鉴</a></p></body>
+<body>
+<section class="invite-gate" id="invite-gate" aria-labelledby="gate-title">
+<div class="gate-content" data-enter>
+<h1 id="gate-title">喵呜呜与威士忌</h1>
+<form id="gate-form" hidden>
+<label for="invite-code" class="visually-hidden">邀请码</label>
+<div class="gate-field">
+<input id="invite-code" name="code" type="password" placeholder="输入邀请码" aria-describedby="gate-status" required maxlength="70" autocomplete="off" autocapitalize="characters" spellcheck="false">
+<button type="submit">进入<span aria-hidden="true">↗</span></button>
+</div>
+</form>
+<p id="gate-status" role="status">正在检查设备…</p>
+<a class="legacy-entry" id="legacy-entry" href="https://miaow.bonny-scarf-6078.chatgpt.site/" hidden>已绑定？去原站迁移</a>
+</div>
+</section>
+<div class="shell" id="gallery" hidden>
+<header class="mast">
+<a class="brand" href="#">喵呜呜与威士忌</a>
+<div class="account">
+<button class="small" type="button" id="transfer-pages" hidden>迁移到短网址</button>
+<button class="small" type="button" id="manage" hidden>管理图鉴</button>
+<button class="small" type="button" id="account" hidden>邀请码</button>
+</div>
+</header>
+<main class="album" data-enter>
+<header class="window-bar">
+  <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span id="window-title">提示词</span>
+</header>
+<nav aria-label="图鉴" id="gallery-tabs">
+  <a id="browse-link" href="#" data-shelf="prompts"><span class="desk-icon desk-folder" aria-hidden="true"></span><span>提示词</span></a>
+  <a href="#show" data-shelf="show"><span class="desk-icon desk-photo" aria-hidden="true"></span><span>秀图</span></a>
+  <a href="#wish" data-shelf="wish"><span class="desk-icon desk-letter" aria-hidden="true"></span><span>许愿</span></a>
+</nav>
+<section aria-label="图鉴目录" class="directory">
+<div class="section-head">
+<div><a href="#" id="back" hidden>← 返回分组</a><h1 id="section-title" tabindex="-1">提示词分组</h1></div>
+<span id="count"></span>
+</div>
+<div class="browse-tools">
+<label class="search"><span class="search-icon" aria-hidden="true"></span><span class="visually-hidden">搜索</span><input type="search" id="search" placeholder="搜索分组、标题或提示词"></label>
+</div>
+<p id="notice" role="status">正在载入图鉴…</p>
+<article id="wish-board" hidden>
+<form id="wish-form" class="wish-note">
+<div class="wish-note-paper">
+  <label class="wish-note-label" for="wish-message">想要什么样的提示词？</label>
+  <textarea id="wish-message" name="message" required maxlength="800" placeholder="把愿望写在这里…"></textarea>
+  <div class="wish-note-actions">
+    <label class="wish-attachment">
+      <input name="image" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp">
+      <span id="wish-file-label">＋ 参考图（选填）</span>
+    </label>
+    <button class="primary" type="submit">送出愿望 <span aria-hidden="true">↗</span></button>
+  </div>
+</div>
+<div class="wish-flight" aria-hidden="true" hidden>
+  <div class="wish-plane"><i></i><i></i><i></i></div>
+</div>
+</form>
+<p id="wish-status" class="hint" role="status"></p>
+</article>
+<div id="cards" class="grid"></div>
+</section>
+</main>
+</div>
+<dialog id="detail" aria-labelledby="detail-title">
+<div class="detail-layout">
+<div class="detail-art"><div class="detail-print"><img id="detail-image" alt=""></div></div>
+<div class="detail-copy">
+<button class="close" id="close" type="button" aria-label="关闭详情">×</button>
+<div class="detail-head"><p id="detail-group" class="overline"></p><h2 id="detail-title"></h2><p class="sample" id="detail-sample" hidden>演示例图 · 非 NovelAI 实测出图</p></div>
+<section class="prompt-block"><div class="prompt-head"><h3>正面提示词</h3><button class="copy" type="button" id="copy-positive">复制正面提示词</button></div><pre id="positive"></pre></section>
+<section class="prompt-block" id="negative-block" hidden><div class="prompt-head"><h3>负面提示词</h3><button class="copy" type="button" id="copy-negative">复制负面提示词</button></div><pre id="negative"></pre></section>
+<div class="item-actions"><button class="primary" type="button" id="show-button">＋ 秀图</button><button class="small" type="button" id="edit-entry" hidden>编辑提示词</button></div>
+<form id="show-form" hidden>
+<label>显示昵称<input name="nickname" required maxlength="32" placeholder="显示在秀图墙上"></label>
+<label>上传图片<input name="image" type="file" accept="image/png,image/jpeg,image/webp" required></label>
+<button class="primary">发布秀图</button>
+</form>
+<p class="hint" id="detail-status" role="status"></p>
+<section class="community"><h3>大家的秀图 <span id="show-count"></span></h3><div id="showcases" class="show-grid"></div></section>
+</div>
+</div>
+</dialog>
+<dialog id="panel" aria-labelledby="panel-title">
+<div class="panel-content">
+<button type="button" class="close" id="panel-close" aria-label="关闭弹窗">×</button>
+<h2 id="panel-title"></h2>
+<div id="panel-body"></div>
+<p id="panel-status" class="hint" role="status"></p>
+</div>
+</dialog>
+</body>
 </html>
