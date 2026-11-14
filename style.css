@@ -554,39 +554,50 @@ body:has(#gallery:not([hidden])){
 #gallery .show-card{border-color:#adc8e2;background:#fff}
 /* Folded wish stationery */
 #wish-board{
-  max-width:612px;margin:20px auto 24px;padding:0;
+  width:min(100%,386px);margin:20px auto 26px;padding:0;
   background:none;border:0;box-shadow:none;
 }
 #wish-form{position:relative;margin:0;padding:0;border:0;isolation:isolate;perspective:620px}
 .wish-note-paper{
   position:relative;transform-origin:center 52%;
-  padding:19px 20px 14px;border:1px solid #ceb5c9;border-radius:4px 4px 7px 4px;
-  background:linear-gradient(148deg,#fffcff,#fbf0f7 78%,#f6e7f2);
-  box-shadow:0 2px 0 #fff inset,4px 5px 0 #ddd4e9a6,0 8px 19px #5e547017;
+  padding:22px 16px 12px 29px;color:#584738;
+  background:linear-gradient(105deg,#fdf3d9,#fff8e7 65%,#f9edd4);
+  border:0;border-radius:1px;
+  box-shadow:2px 5px 12px #5d493128,0 0 0 1px #967b4e19;
 }
 .wish-note-paper::before{
-  content:"";position:absolute;pointer-events:none;
-  width:61px;height:14px;top:-8px;left:calc(50% - 31px);transform:rotate(-5deg);
-  background:repeating-linear-gradient(115deg,#c4dff0e8 0 4px,#d9edf9e8 4px 8px);
-  border:1px solid #accbd98c;border-radius:2px;
+  content:"";position:absolute;pointer-events:none;width:76px;height:19px;top:-9px;left:calc(50% - 38px);
+  transform:rotate(-6deg);
+  background:repeating-linear-gradient(110deg,#ebc8d4df 0 4px,#f5dce2eb 4px 8px);
+  clip-path:polygon(0 0,100% 0,96% 26%,100% 51%,96% 78%,100% 100%,0 100%,4% 76%,0 53%,4% 26%);
 }
-.wish-note-label{margin:0 0 3px;color:#6b4662;font-family:var(--serif);font-weight:650}
+.wish-note-paper::after{
+  content:"";position:absolute;inset:0 auto 0 0;width:14px;pointer-events:none;
+  border-right:1px solid #c69e8970;
+  background:radial-gradient(circle at 6px 12px,#e0eaf3 0 2px,#b7936b69 2.4px 3px,transparent 3.5px) 0 3px/14px 24px repeat-y;
+}
+.wish-note-label{margin:0 0 2px;color:#584336;font-family:var(--serif);font-weight:650;font-size:15px}
 #wish-form textarea{
-  display:block;min-height:108px;padding:0 3px;resize:vertical;line-height:29px;
-  border:0;border-radius:0;color:#4e3852;
-  background:repeating-linear-gradient(transparent 0 28px,#d8c0d672 28px 29px);
+  display:block;min-height:72px;padding:0 2px;resize:vertical;line-height:24px;
+  border:0;border-radius:0;color:#4d3b30;font-size:16px;
+  background:repeating-linear-gradient(transparent 0 23px,#ad94735c 23px 24px);
 }
-#wish-form textarea::placeholder{color:#816b81}
-.wish-note-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px}
+#wish-form textarea::placeholder{color:#78634e}
+.wish-note-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.wish-file{display:flex;align-items:center;gap:3px;min-width:0}
 .wish-note-actions .wish-attachment{
-  display:block;min-width:0;position:relative;margin:0;padding:6px 8px;
-  border:1px dashed #ae8faf;border-radius:4px;color:#624668;font-size:12px;cursor:pointer;
+  display:block;min-width:0;position:relative;margin:0;padding:4px 2px;
+  color:#745344;font-size:12px;cursor:pointer;text-decoration:underline;text-decoration-color:#ba9a7d;text-underline-offset:3px;
 }
 .wish-attachment span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wish-attachment:focus-within{outline:2px solid #785788;outline-offset:2px}
-#wish-board .primary{margin:0;white-space:nowrap;background:#765b93;border-color:#765b93}
-#wish-board .primary:hover{background:#624780}
-#wish-status{margin:11px 0 0;color:#5e5278}
+.wish-attachment:focus-within{outline:2px solid #886250;outline-offset:2px}
+.wish-clear-file{flex:none;border:0;background:transparent;color:#784f48;font-size:18px;line-height:1;padding:2px 6px}
+#wish-board .primary{
+  display:inline-flex;align-items:center;gap:4px;margin:0;padding:4px 8px;min-height:32px;
+  white-space:nowrap;color:#674735;background:#f6e4c5;border:1px dashed #a88662;border-radius:2px;
+}
+#wish-board .primary:hover{background:#efd8af}
+#wish-status{margin:9px 0 0;color:#5e5278}
 .wish-flight{position:absolute;inset:0;z-index:3;pointer-events:none}
 .wish-plane{
   position:absolute;left:50%;top:50%;width:112px;height:70px;
@@ -596,8 +607,14 @@ body:has(#gallery:not([hidden])){
 .wish-plane i:nth-child(1){clip-path:polygon(0 32%,100% 0,23% 70%);background:#fff7fc}
 .wish-plane i:nth-child(2){clip-path:polygon(23% 70%,100% 0,38% 74%,25% 100%);background:#b79dbd}
 .wish-plane i:nth-child(3){clip-path:polygon(38% 74%,100% 0,63% 100%);background:#e4c6df}
-@media(max-width:430px){.wish-note-paper{padding:16px 12px 12px}.wish-note-actions .primary{padding:6px 8px;font-size:12px}}
-.wish-card{border-color:#c4cee2;border-top-color:#8daccd;background:#fffafb}
+@media(max-width:430px){#wish-board{width:min(100% - 16px,310px)}.wish-note-paper{padding:19px 11px 10px 24px}}
+.wish-card{
+  border:0;border-radius:1px;padding:12px 12px 13px 16px;
+  background:#fff2d7;box-shadow:2px 4px 9px #4740441d,0 0 0 1px #9d7f5f25;
+}
+.wish-card:nth-child(even){background:#fbedf3}
+.wish-card p{color:#544034;line-height:25px;background:repeating-linear-gradient(transparent 0 24px,#9c7c6133 24px 25px)}
+#cards.wishes{align-items:start}
 #detail,#panel{background:#f7fbff;border-color:#9db9d7}
 #detail .detail-art{background:#dceaf6}
 #detail .detail-print,#detail .prompt-block,#detail #show-form:not([hidden]){background:#fffaff;border-color:#c6d6e8}

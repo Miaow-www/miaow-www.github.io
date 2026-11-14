@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f4ee">
 <title>喵呜呜与威士忌</title>
-<link rel="stylesheet" href="/style.css?v=13">
-<script type="module" src="/app.js?v=13"></script>
+<link rel="stylesheet" href="/style.css?v=14">
+<script type="module" src="/app.js?v=14"></script>
 </head>
 <body>
 <section class="invite-gate" id="invite-gate" aria-labelledby="gate-title">
@@ -51,16 +51,19 @@
 </div>
 <p id="notice" role="status">正在载入图鉴…</p>
 <article id="wish-board" hidden>
-<form id="wish-form" class="wish-note">
+<form id="wish-form" class="wish-note" aria-describedby="wish-status">
 <div class="wish-note-paper">
   <label class="wish-note-label" for="wish-message">想要什么样的提示词？</label>
   <textarea id="wish-message" name="message" required maxlength="800" placeholder="把愿望写在这里…"></textarea>
   <div class="wish-note-actions">
-    <label class="wish-attachment">
-      <input name="image" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp">
-      <span id="wish-file-label">＋ 参考图（选填）</span>
-    </label>
-    <button class="primary" type="submit">送出愿望 <span aria-hidden="true">↗</span></button>
+    <div class="wish-file">
+      <label class="wish-attachment">
+        <input name="image" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp">
+        <span id="wish-file-label">夹一张参考图</span>
+      </label>
+      <button class="wish-clear-file" type="button" id="wish-clear-file" aria-label="移除参考图" hidden>×</button>
+    </div>
+    <button class="primary" type="submit">寄出 <span aria-hidden="true">↗</span></button>
   </div>
 </div>
 <div class="wish-flight" aria-hidden="true" hidden>

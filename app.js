@@ -82,7 +82,7 @@ async function setPhoto(img,path,link) {
 }
 async function prepareImage(file) {
   if (!file?.size || file.size>8*1024*1024) throw new Error('请上传 8 MB 以内的图片。');
-  const source = await createImageBitmap(file);
+  const source=await createImageBitmap(file).catch(()=>{ throw new Error('这张图片打不开，请换一张 JPG、PNG 或 WebP。'); });
   try {
     const scale = Math.min(1,2048/Math.max(source.width,source.height));
     const canvas = document.createElement('canvas');
@@ -338,8 +338,18 @@ function confirmWishRemoval(item,tile) {
 const wishForm=$('wish-form');
 const wishImage=wishForm.elements.image;
 const wishFileLabel=$('wish-file-label');
-wishImage.addEventListener('change',()=>{
-  wishFileLabel.textContent=wishImage.files[0]?.name || '＋ 参考图（选填）';
+const clearWishFile=$('wish-clear-file');
+function syncWishFile() {
+  const file=wishImage.files[0];
+  wishFileLabel.textContent=file?.name || '夹一张参考图';
+  wishFileLabel.title=file?.name || '';
+  clearWishFile.hidden=!file;
+}
+wishImage.addEventListener('change',syncWishFile);
+clearWishFile.addEventListener('click',()=>{
+  wishImage.value='';
+  syncWishFile();
+  wishImage.focus();
 });
 async function flyWish() {
   if (!motionAllowed.matches || $('wish-board').hidden) return;
@@ -377,7 +387,7 @@ wishForm.addEventListener('submit',event=>{
     await api('wishes','POST',body);
     await flyWish().catch(()=>{});
     wishForm.reset();
-    wishFileLabel.textContent='＋ 参考图（选填）';
+    syncWishFile();
     status.textContent='愿望已送出。';
     if (route()[0]==='wish') await render();
   });
