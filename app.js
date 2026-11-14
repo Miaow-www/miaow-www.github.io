@@ -362,7 +362,6 @@ async function refreshAccount() {
   $('gallery').hidden=!account.signedIn;
   $('gate-form').hidden=account.signedIn;
   $('gate-status').textContent='';
-  $('legacy-entry').hidden=!onPages || account.signedIn;
   $('account').hidden=!isAdmin();
   $('transfer-pages').hidden=!account.signedIn || onPages;
   $('manage').hidden=!isAdmin();

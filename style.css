@@ -626,5 +626,3 @@ body:has(#gallery:not([hidden])){
   #gallery .card-info{left:8px;right:8px;bottom:8px}
   .window-bar{min-height:38px}
 }
-
-.legacy-entry{display:inline-block;margin-top:10px;text-decoration:underline;color:#674639;font-size:13px}
